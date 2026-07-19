@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>Handbuilt — Design | Build | Manage</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;500;700;900&display=swap" rel="stylesheet"/>
 <style>
@@ -19,8 +19,8 @@
   --sans:'DM Sans',system-ui,sans-serif;
   --ease:cubic-bezier(0.16,1,0.3,1);
 }
-html{font-size:16px;scroll-behavior:smooth}
-body{background:var(--white);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
+html{font-size:16px;scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--white);color:var(--ink);font-family:var(--sans);overflow-x:hidden;max-width:100vw}
 
 /* ── NAV ── */
 nav{
@@ -336,7 +336,7 @@ nav.solid .n-cta{color:var(--white)}
 .talk-btn{
   width:100%;
   font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  background:var(--ink);color:var(--white);border:none;
+  background:var(--green);color:var(--white);border:none;
   padding:18px;cursor:pointer;transition:background .2s;margin-bottom:32px;
 }
 .talk-btn:hover{background:#222222}
@@ -367,61 +367,30 @@ footer{
   display:flex;justify-content:space-between;align-items:center;
 }
 /* Footer */
-footer{background:var(--ink);color:var(--white)}
-.footer-top{
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;
-  padding:64px 48px 48px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-.ft-logo{
-  font-size:.8rem;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--white);
-  border-bottom:2px solid var(--green);
-  display:inline-block;padding-bottom:2px;margin-bottom:10px;
-}
-.ft-tagline{
-  font-size:.56rem;font-weight:300;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:6px;
-}
-.ft-location{
-  font-size:.72rem;font-weight:300;color:rgba(255,255,255,.2);margin-bottom:4px;
-}
-.ft-appt{
-  font-size:.62rem;font-weight:300;color:rgba(255,255,255,.12);
-  font-style:italic;letter-spacing:.02em;
-}
-.ft-col-head{
-  font-size:.56rem;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:rgba(255,255,255,.3);
-  margin-bottom:16px;
-}
-.ft-links{display:flex;flex-direction:column;gap:8px}
-.ft-link{
-  font-size:.8rem;font-weight:300;color:rgba(255,255,255,.4);
-  cursor:default;transition:color .15s;
-}
+footer{background:var(--ink);color:var(--white);border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1.6fr 1fr;gap:48px;padding:72px 48px 56px;flex:1}
+.ft-brand{display:flex;flex-direction:column}
+.ft-logo{font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--white);border-bottom:2px solid var(--green);display:inline-block;padding-bottom:2px;margin-bottom:14px}
+.ft-tagline{font-size:.56rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:10px}
+.ft-studio{font-size:.78rem;font-weight:300;color:rgba(255,255,255,.35);line-height:1.6}
+.ft-studio em{display:block;font-style:normal;font-size:.65rem;color:rgba(255,255,255,.18);margin-top:4px;letter-spacing:.02em}
+.ft-col-head{font-size:.54rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:18px}
+.ft-links{display:flex;flex-direction:column;gap:9px}
+.ft-link{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.4);cursor:default;transition:color .15s}
 .ft-link:hover{color:rgba(255,255,255,.7)}
-.ft-social{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
-.ft-social-link{
-  display:flex;align-items:center;gap:10px;
-  font-size:.78rem;font-weight:300;color:rgba(255,255,255,.35);
-  text-decoration:none;transition:color .2s;
-}
-.ft-social-link:hover{color:rgba(255,255,255,.7)}
-.ft-cta{
-  display:inline-block;
-  font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--white);background:var(--green);
-  padding:10px 20px;text-decoration:none;
-  transition:background .2s;
-}
+.ft-regions-p{font-size:.74rem;font-weight:300;color:rgba(255,255,255,.3);line-height:2;width:100%;display:block}
+.ft-regions-p span{color:rgba(255,255,255,.12);margin:0 5px}
+.ft-svg-map{margin-bottom:20px;border:1px solid rgba(255,255,255,.06);overflow:hidden}
+.ft-map-mobile{display:none;margin-bottom:20px;border-radius:2px;overflow:hidden}
+.ft-map-img{width:100%;height:auto;display:block;opacity:.85}
+.ft-social{display:flex;flex-direction:column;gap:11px;margin-bottom:22px}
+.ft-social-link{display:flex;align-items:center;gap:9px;font-size:.78rem;font-weight:300;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+.ft-social-link:hover{color:rgba(255,255,255,.75)}
+.ft-cta{display:block;font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--green);padding:12px 20px;text-decoration:none;transition:background .2s;text-align:center}
 .ft-cta:hover{background:var(--green2)}
-.footer-bottom{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 48px;
-}
-.fb-copy{font-size:.58rem;font-weight:300;color:rgba(255,255,255,.15);letter-spacing:.04em}
-.fb-site{font-size:.58rem;font-weight:300;color:rgba(255,255,255,.15);letter-spacing:.08em;text-transform:uppercase}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-top:1px solid rgba(255,255,255,.06);clear:both;width:100%}
+.fb-copy,.fb-site{font-size:.56rem;font-weight:300;color:rgba(255,255,255,.15);letter-spacing:.04em}
+.fb-site{text-transform:uppercase;letter-spacing:.08em}
 
 /* ══════════════
    MODAL
@@ -464,6 +433,12 @@ footer{background:var(--ink);color:var(--white)}
   font-size:.75rem;font-weight:300;color:var(--muted);
   margin-bottom:20px;line-height:1.5;
 }
+.m-error{
+  font-size:.75rem;font-weight:500;color:#cc0000;
+  margin-top:12px;display:none;padding:10px 14px;
+  background:rgba(204,0,0,.06);border-left:2px solid #cc0000;
+}
+.m-error.show{display:block}
 .mopts{display:flex;flex-direction:column;gap:4px}
 .mopt{
   padding:12px 14px;border:1px solid var(--mid);
@@ -472,10 +447,10 @@ footer{background:var(--ink);color:var(--white)}
   transition:all .12s;width:100%;
 }
 .mopt:hover{border-color:var(--ink);color:var(--ink);background:var(--off)}
-.mopt.sel{border-color:var(--ink);background:var(--ink);color:var(--white)}
+.mopt.sel{border-color:var(--green);background:var(--green);color:var(--white)}
 .mi{
   width:100%;background:var(--off);border:1px solid var(--mid);
-  padding:12px 14px;font-size:.86rem;font-weight:300;
+  padding:12px 14px;font-size:16px;font-weight:300;
   color:var(--ink);outline:none;transition:border-color .2s;
   display:block;margin-bottom:8px;font-family:var(--sans);
 }
@@ -535,25 +510,64 @@ footer{background:var(--ink);color:var(--white)}
   nav{padding:0 24px}
   .n-right .nl{display:none}
   .hero-inner{padding:0 24px 52px}
-  .intro{padding:80px 24px}
+  .intro{padding:72px 24px}
   .intro-cols{grid-template-columns:1fr}
   .photo-break .pb-caption{right:24px}
   .services{padding:0 24px}
   .svc-top{grid-template-columns:1fr}
-  .portfolio{padding:64px 24px}
+  .portfolio{padding:56px 24px}
   .port-grid{grid-template-columns:1fr;grid-template-rows:auto;height:auto}
   .pcard-a{grid-row:auto;aspect-ratio:4/3}
   .pcard-b,.pcard-c{aspect-ratio:4/3}
-  .founder{padding:72px 24px}
-  .founder-inner{grid-template-columns:1fr;gap:48px}
-  .f-right{padding-top:0}
-  .talk{grid-template-columns:1fr;gap:48px;padding:72px 24px}
+  .founder{padding:64px 24px}
+  .founder-inner{grid-template-columns:1fr;gap:40px}
+  .f-right{padding-top:0;border-left:none;padding-left:0;border-top:1px solid var(--mid);padding-top:32px}
+  .talk{grid-template-columns:1fr;gap:40px;padding:64px 24px}
+  /* Territory */
   .territory{padding:56px 24px}
-  .territory-top{margin-bottom:32px}
-  .territory-grid{grid-template-columns:1fr}
-  footer{}
-  .footer-top{grid-template-columns:1fr;gap:36px;padding:48px 24px 36px}
-  .footer-bottom{padding:16px 24px;flex-direction:column;gap:6px;text-align:center}
+  .territory-layout{grid-template-columns:1fr;gap:28px}
+  .territory-map-wrap{position:static;width:100%}
+  .la-map{width:100%;height:auto;display:block}
+  /* Footer - clean single column */
+  footer{overflow:hidden;width:100%}
+  .footer-top{
+    display:flex;
+    flex-direction:column;
+    padding:0;
+    gap:0;
+  }
+  .footer-top > div{
+    padding:28px 24px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    width:100%;
+    box-sizing:border-box;
+  }
+  .ft-regions-p{
+    font-size:.72rem;
+    line-height:1.85;
+    width:100%;
+    overflow-wrap:break-word;
+    word-break:break-word;
+    display:block;
+  }
+  .ft-regions-p span{margin:0 3px}
+  .ft-cta{
+    display:block;
+    width:100%;
+    text-align:center;
+    box-sizing:border-box;
+  }
+  .footer-bottom{
+    padding:20px 24px;
+    flex-direction:column;
+    gap:4px;
+    text-align:center;
+    width:100%;
+    box-sizing:border-box;
+    margin-top:0;
+    order:999;
+  }
+  /* Modal */
   .modal{max-width:100%;max-height:100vh;height:100%}
   .overlay{align-items:flex-end}
   .mbody{padding:32px 24px}
@@ -575,104 +589,131 @@ footer{background:var(--ink);color:var(--white)}
     <div class="mprog"><div class="mprog-fill" id="mpf"></div></div>
     <button class="mclose" onclick="closeModal()">Close ✕</button>
     <div class="mbody" id="mbody">
+
+      <!-- S1: Name -->
       <div class="mstep active" id="ms1">
         <div class="mstep-n">1 of 8</div>
         <div class="mstep-q">What is your name?</div>
         <div class="mi-row">
           <div class="mi-group">
             <label class="mi-label">First Name <span class="mi-req">*</span></label>
-            <input class="mi" type="text" placeholder="First name" id="m-fn" required onkeydown="ek(event,1)"/>
+            <input class="mi" type="text" placeholder="First name" id="m-fn" onkeydown="ek(event,1)"/>
           </div>
           <div class="mi-group">
             <label class="mi-label">Last Name <span class="mi-req">*</span></label>
-            <input class="mi" type="text" placeholder="Last name" id="m-ln" required onkeydown="ek(event,1)"/>
+            <input class="mi" type="text" placeholder="Last name" id="m-ln" onkeydown="ek(event,1)"/>
           </div>
         </div>
+        <div class="m-error" id="err1"></div>
         <div class="mnav"><span></span><button class="m-next" onclick="nx(1)">Continue</button></div>
       </div>
+
+      <!-- S2: Phone -->
       <div class="mstep" id="ms2">
         <div class="mstep-n">2 of 8</div>
         <div class="mstep-q">What is your phone number?</div>
         <div class="mi-group">
           <label class="mi-label">Phone Number <span class="mi-req">*</span></label>
-          <input class="mi" type="tel" placeholder="(000) 000-0000" id="m-ph" required onkeydown="ek(event,2)"/>
+          <input class="mi" type="tel" placeholder="(000) 000-0000" id="m-ph" oninput="fmtPhone(this)" onkeydown="ek(event,2)"/>
         </div>
+        <div class="m-error" id="err2"></div>
         <div class="mnav"><button class="m-back" onclick="pv(2)">Back</button><button class="m-next" onclick="nx(2)">Continue</button></div>
       </div>
-      <div class="mstep" id="ms2b">
+
+      <!-- S3: Email -->
+      <div class="mstep" id="ms3">
         <div class="mstep-n">3 of 8</div>
         <div class="mstep-q">What is your email address?</div>
         <div class="mi-group">
           <label class="mi-label">Email Address <span class="mi-req">*</span></label>
-          <input class="mi" type="email" placeholder="your@email.com" id="m-em" required onkeydown="ek(event,'2b')"/>
+          <input class="mi" type="email" placeholder="your@email.com" id="m-em" onkeydown="ek(event,3)"/>
         </div>
-        <div class="mnav"><button class="m-back" onclick="pv('2b')">Back</button><button class="m-next" onclick="nx('2b')">Continue</button></div>
+        <div class="m-error" id="err3"></div>
+        <div class="mnav"><button class="m-back" onclick="pv(3)">Back</button><button class="m-next" onclick="nx(3)">Continue</button></div>
       </div>
+
+      <!-- S4: Project type -->
       <div class="mstep" id="ms4">
         <div class="mstep-n">4 of 8</div>
         <div class="mstep-q">What are you building?</div>
-        <div class="mstep-hint">Select all that apply.</div>
-        <div class="mopts" id="ms3o">
-          <button class="mopt" data-v="New Construction" onclick="tog(this,'ms3o')">New Construction</button>
-          <button class="mopt" data-v="Kitchen" onclick="tog(this,'ms3o')">Kitchen</button>
-          <button class="mopt" data-v="Bathroom" onclick="tog(this,'ms3o')">Bathroom</button>
-          <button class="mopt" data-v="ADU" onclick="tog(this,'ms3o')">ADU</button>
-          <button class="mopt" data-v="Outdoor Living" onclick="tog(this,'ms3o')">Outdoor Living</button>
-          <button class="mopt" data-v="Other" onclick="tog(this,'ms3o')">Other</button>
+        <div class="mstep-hint">Select all that apply. At least one required.</div>
+        <div class="mopts" id="ms4opts">
+          <button class="mopt" data-v="New Construction" onclick="tog(this,'ms4opts')">New Construction</button>
+          <button class="mopt" data-v="Kitchen" onclick="tog(this,'ms4opts')">Kitchen</button>
+          <button class="mopt" data-v="Bathroom" onclick="tog(this,'ms4opts')">Bathroom</button>
+          <button class="mopt" data-v="ADU" onclick="tog(this,'ms4opts')">ADU</button>
+          <button class="mopt" data-v="Outdoor Living" onclick="tog(this,'ms4opts')">Outdoor Living</button>
+          <button class="mopt" data-v="Other" onclick="tog(this,'ms4opts')">Other</button>
         </div>
-        <div class="mnav"><button class="m-back" onclick="pv(3)">Back</button><button class="m-next" onclick="nx(3)">Continue</button></div>
+        <div class="m-error" id="err4"></div>
+        <div class="mnav"><button class="m-back" onclick="pv(4)">Back</button><button class="m-next" onclick="nx(4)">Continue</button></div>
       </div>
+
+      <!-- S5: Budget -->
       <div class="mstep" id="ms5">
         <div class="mstep-n">5 of 8</div>
         <div class="mstep-q">What is your approximate budget?</div>
         <div class="mstep-hint">Helps us understand the scope before we talk.</div>
-        <div class="mopts" id="ms4o">
-          <button class="mopt" data-v="Under $50K" onclick="sel(this,'ms4o')">Under $50K</button>
-          <button class="mopt" data-v="$50K to $100K" onclick="sel(this,'ms4o')">$50K to $100K</button>
-          <button class="mopt" data-v="$100K to $250K" onclick="sel(this,'ms4o')">$100K to $250K</button>
-          <button class="mopt" data-v="$250K to $500K" onclick="sel(this,'ms4o')">$250K to $500K</button>
-          <button class="mopt" data-v="$500K to $1M" onclick="sel(this,'ms4o')">$500K to $1M</button>
-          <button class="mopt" data-v="$1M to $3M" onclick="sel(this,'ms4o')">$1M to $3M</button>
-          <button class="mopt" data-v="$3M to $5M" onclick="sel(this,'ms4o')">$3M to $5M</button>
-          <button class="mopt" data-v="$5M to $10M" onclick="sel(this,'ms4o')">$5M to $10M</button>
-          <button class="mopt" data-v="$10M+" onclick="sel(this,'ms4o')">$10M+</button>
+        <div class="mopts" id="ms5opts">
+          <button class="mopt" data-v="Under $50K" onclick="sel(this,'ms5opts')">Under $50K</button>
+          <button class="mopt" data-v="$50K to $100K" onclick="sel(this,'ms5opts')">$50K to $100K</button>
+          <button class="mopt" data-v="$100K to $250K" onclick="sel(this,'ms5opts')">$100K to $250K</button>
+          <button class="mopt" data-v="$250K to $500K" onclick="sel(this,'ms5opts')">$250K to $500K</button>
+          <button class="mopt" data-v="$500K to $1M" onclick="sel(this,'ms5opts')">$500K to $1M</button>
+          <button class="mopt" data-v="$1M to $3M" onclick="sel(this,'ms5opts')">$1M to $3M</button>
+          <button class="mopt" data-v="$3M to $5M" onclick="sel(this,'ms5opts')">$3M to $5M</button>
+          <button class="mopt" data-v="$5M to $10M" onclick="sel(this,'ms5opts')">$5M to $10M</button>
+          <button class="mopt" data-v="$10M+" onclick="sel(this,'ms5opts')">$10M+</button>
         </div>
-        <div class="mnav"><button class="m-back" onclick="pv(4)">Back</button><button class="m-next" onclick="nx(4)">Continue</button></div>
+        <div class="m-error" id="err5"></div>
+        <div class="mnav"><button class="m-back" onclick="pv(5)">Back</button><button class="m-next" onclick="nx(5)">Continue</button></div>
       </div>
+
+      <!-- S6: Timeline -->
       <div class="mstep" id="ms6">
         <div class="mstep-n">6 of 8</div>
         <div class="mstep-q">When are you hoping to start?</div>
         <div class="mstep-hint">No wrong answer.</div>
-        <div class="mopts" id="ms5o">
-          <button class="mopt" data-v="Ready now" onclick="sel(this,'ms5o')">Ready now</button>
-          <button class="mopt" data-v="3 to 6 months" onclick="sel(this,'ms5o')">3 to 6 months</button>
-          <button class="mopt" data-v="6 to 12 months" onclick="sel(this,'ms5o')">6 to 12 months</button>
-          <button class="mopt" data-v="Just exploring" onclick="sel(this,'ms5o')">Just exploring</button>
+        <div class="mopts" id="ms6opts">
+          <button class="mopt" data-v="Ready now" onclick="sel(this,'ms6opts')">Ready now</button>
+          <button class="mopt" data-v="3 to 6 months" onclick="sel(this,'ms6opts')">3 to 6 months</button>
+          <button class="mopt" data-v="6 to 12 months" onclick="sel(this,'ms6opts')">6 to 12 months</button>
+          <button class="mopt" data-v="Just exploring" onclick="sel(this,'ms6opts')">Just exploring</button>
         </div>
-        <div class="mnav"><button class="m-back" onclick="pv(5)">Back</button><button class="m-next" onclick="nx(5)">Continue</button></div>
+        <div class="m-error" id="err6"></div>
+        <div class="mnav"><button class="m-back" onclick="pv(6)">Back</button><button class="m-next" onclick="nx(6)">Continue</button></div>
       </div>
+
+      <!-- S7: Location -->
       <div class="mstep" id="ms7">
         <div class="mstep-n">7 of 8</div>
         <div class="mstep-q">Where is the property?</div>
-        <div class="mstep-hint">Neighborhood or zip code is fine.</div>
-        <input class="mi" type="text" placeholder="Neighborhood or city" id="m-loc" onkeydown="ek(event,7)"/>
-        <div class="mnav"><button class="m-back" onclick="pv(6)">Back</button><button class="m-next" onclick="nx(6)">Continue</button></div>
+        <div class="mstep-hint">Neighborhood or city is fine.</div>
+        <div class="mi-group">
+          <label class="mi-label">Location <span class="mi-req">*</span></label>
+          <input class="mi" type="text" placeholder="e.g. Highland Park, Beverly Hills" id="m-loc" onkeydown="ek(event,7)"/>
+        </div>
+        <div class="m-error" id="err7"></div>
+        <div class="mnav"><button class="m-back" onclick="pv(7)">Back</button><button class="m-next" onclick="nx(7)">Continue</button></div>
       </div>
+
+      <!-- S8: Source -->
       <div class="mstep" id="ms8">
         <div class="mstep-n">8 of 8</div>
         <div class="mstep-q">How did you hear about us?</div>
-        <div class="mstep-hint">Helps us know where to show up.</div>
-        <div class="mopts" id="ms7o">
-          <button class="mopt" data-v="Google" onclick="sel(this,'ms7o')">Google</button>
-          <button class="mopt" data-v="Instagram" onclick="sel(this,'ms7o')">Instagram</button>
-          <button class="mopt" data-v="Facebook" onclick="sel(this,'ms7o')">Facebook</button>
-          <button class="mopt" data-v="Friend or neighbor" onclick="sel(this,'ms7o')">Friend or neighbor</button>
-          <button class="mopt" data-v="Architect or designer" onclick="sel(this,'ms7o')">Architect or designer</button>
-          <button class="mopt" data-v="Nextdoor" onclick="sel(this,'ms7o')">Nextdoor</button>
-          <button class="mopt" data-v="Other" onclick="sel(this,'ms7o')">Other</button>
+        <div class="mopts" id="ms8opts">
+          <button class="mopt" data-v="Google" onclick="sel(this,'ms8opts')">Google</button>
+          <button class="mopt" data-v="Instagram" onclick="sel(this,'ms8opts')">Instagram</button>
+          <button class="mopt" data-v="Facebook" onclick="sel(this,'ms8opts')">Facebook</button>
+          <button class="mopt" data-v="Friend or neighbor" onclick="sel(this,'ms8opts')">Friend or neighbor</button>
+          <button class="mopt" data-v="Architect or designer" onclick="sel(this,'ms8opts')">Architect or designer</button>
+          <button class="mopt" data-v="Nextdoor" onclick="sel(this,'ms8opts')">Nextdoor</button>
+          <button class="mopt" data-v="Other" onclick="sel(this,'ms8opts')">Other</button>
         </div>
-        <div class="mnav"><button class="m-back" onclick="pv(7)">Back</button><button class="m-next" onclick="submit()">Let's Talk</button></div>
+        <div class="m-error" id="err8"></div>
+        <div class="mnav"><button class="m-back" onclick="pv(8)">Back</button><button class="m-next" onclick="submit()">Let's Talk</button></div>
       </div>
+
     </div>
     <div class="msuccess" id="msuccess">
       <div class="ms-icon">🏡</div>
@@ -800,7 +841,7 @@ footer{background:var(--ink);color:var(--white)}
     <div class="f-right">
       <div class="f-point reveal rd1">
         <span class="fp-l">The differentiator</span>
-        <p class="fp-p">Full cost transparency before construction begins. Every material priced, every line locked. Nobody else in the market offers this with a design-build package.</p>
+        <p class="fp-p">No hidden costs, no hidden decisions. One team carries the project from first sketch to final walk-through. You always know what it costs, what comes next, and who is accountable for every part of it.</p>
       </div>
       <div class="f-point reveal rd2">
         <span class="fp-l">The process</span>
@@ -831,75 +872,52 @@ footer{background:var(--ink);color:var(--white)}
   </div>
 </section>
 
-<!-- TERRITORY -->
-<section class="territory reveal">
-  <div class="territory-top">
-    <div class="tz-heading">Areas Served</div>
-  </div>
-  <div class="territory-layout">
-    <div class="territory-map-wrap">
-      <iframe
-        class="la-map"
-        loading="lazy"
-        allowfullscreen
-        referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d212690!2d-118.2437!3d34.0522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1720000000000!5m2!1sen!2sus"
-        style="border:0;display:block;width:100%;height:100%;min-height:360px;filter:grayscale(100%) contrast(1.05);">
-      </iframe>
-    </div>
-    <div class="territory-areas">
-      <div class="tz-block">
-        <div class="tz-lbl">Pasadena</div>
-        <div class="tz-desc">Pasadena, La Cañada Flintridge, San Marino, South Pasadena, Sierra Madre, Altadena, Monrovia, Arcadia, Temple City, Alhambra, San Gabriel, Glendale, Burbank, and surrounding communities.</div>
-      </div>
-      <div class="tz-block">
-        <div class="tz-lbl">Los Angeles</div>
-        <div class="tz-desc">Beverly Hills, Bel Air, Brentwood, Hollywood Hills, Hancock Park, Los Feliz, Silver Lake, Echo Park, Atwater Village, Eagle Rock, Highland Park, Glassell Park, Mount Washington, Laughlin Park, Studio City, Sherman Oaks, Encino, Pacific Palisades, Santa Monica, Mar Vista, Culver City, and surrounding neighborhoods.</div>
-      </div>
-      <div class="tz-block">
-        <div class="tz-lbl">Orange County</div>
-        <div class="tz-desc">Newport Coast, Newport Beach, Laguna Beach, Laguna Hills, Laguna Niguel, Corona del Mar, Dana Point, San Clemente, Tustin, Irvine, Anaheim Hills, Villa Park, and nearby communities.</div>
-      </div>
-      <div class="tz-block tz-block-last">
-        <div class="tz-lbl">Beyond</div>
-        <div class="tz-desc">The right project does not have a geographic limit. We travel for work that meets our standard.</div>
-      </div>
-    </div>
-  </div>
-</section>
+
+
+
 
 <footer>
   <div class="footer-top">
-    <div class="ft-left">
+    <div class="ft-brand">
       <div class="ft-logo">Handbuilt</div>
       <div class="ft-tagline">Design | Build | Manage</div>
-      <div class="ft-location">Los Angeles, California</div>
-      <div class="ft-appt">Available by appointment only</div>
+      <div class="ft-studio">
+        Los Angeles, California
+        <em>Consultations by appointment only</em>
+      </div>
     </div>
-    <div class="ft-middle">
+    <div>
       <div class="ft-col-head">Services</div>
       <div class="ft-links">
         <span class="ft-link">New Construction</span>
-        <span class="ft-link">Kitchen</span>
-        <span class="ft-link">Bathroom</span>
-        <span class="ft-link">ADU</span>
+        <span class="ft-link">Kitchen Remodels</span>
+        <span class="ft-link">Bathroom Remodels</span>
+        <span class="ft-link">Custom ADUs</span>
         <span class="ft-link">Outdoor Living</span>
       </div>
     </div>
-    <div class="ft-right">
+    <div>
+      <div class="ft-col-head">Service Areas</div>
+            <p class="ft-regions-p">Altadena&nbsp;· Pacific&nbsp;Palisades&nbsp;· Malibu&nbsp;· Brentwood&nbsp;· Santa&nbsp;Monica&nbsp;· Venice&nbsp;· Mar&nbsp;Vista&nbsp;· Culver&nbsp;City&nbsp;· Playa&nbsp;del&nbsp;Rey&nbsp;· El&nbsp;Segundo&nbsp;· Manhattan&nbsp;Beach&nbsp;· Hermosa&nbsp;Beach&nbsp;· Redondo&nbsp;Beach&nbsp;· Torrance&nbsp;· Pasadena&nbsp;· Silver&nbsp;Lake&nbsp;· Los&nbsp;Feliz&nbsp;· Bel&nbsp;Air&nbsp;· Westwood&nbsp;· West&nbsp;Hollywood&nbsp;· Hancock&nbsp;Park&nbsp;· Larchmont&nbsp;· Beverlywood&nbsp;· Cheviot&nbsp;Hills&nbsp;· Beverly&nbsp;Hills&nbsp;· Laurel&nbsp;Canyon&nbsp;· Eagle&nbsp;Rock&nbsp;· Highland&nbsp;Park&nbsp;· Atwater&nbsp;Village&nbsp;· Glendale&nbsp;· Burbank&nbsp;· Downtown&nbsp;Los&nbsp;Angeles&nbsp;· Arts&nbsp;District&nbsp;· Koreatown&nbsp;· Newport&nbsp;Beach&nbsp;· Laguna&nbsp;Beach&nbsp;· and surrounding Southern California communities.</p>
+    </div>
+    <div>
       <div class="ft-col-head">Connect</div>
       <div class="ft-social">
         <a class="ft-social-link" href="#" aria-label="Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
           Instagram
         </a>
         <a class="ft-social-link" href="#" aria-label="LinkedIn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M8 11v5M8 8v.01M12 16v-5M16 16v-3a2 2 0 0 0-4 0"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M8 11v5M8 8v.01M12 16v-5M16 16v-3a2 2 0 0 0-4 0"/></svg>
           LinkedIn
         </a>
         <a class="ft-social-link" href="#" aria-label="Facebook">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           Facebook
+        </a>
+        <a class="ft-social-link" href="#" aria-label="Houzz">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L3 8.5V22h6.5v-6H14v6h5.5V8.5L12 2zM12 5.2l5.5 3.9V20H16v-6H8v6H4.5V9.1L12 5.2z" opacity=".85"/></svg>
+          Houzz
         </a>
       </div>
       <a class="ft-cta" href="#" onclick="openModal();return false;">Let's Talk</a>
@@ -925,36 +943,100 @@ function closeModal(){document.getElementById('overlay').classList.remove('open'
 function oc(e){if(e.target===document.getElementById('overlay'))closeModal()}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 function prog(s){document.getElementById('mpf').style.width=((s-1)/8*100)+'%'}
-function showStep(n){document.querySelectorAll('.mstep').forEach(s=>s.classList.remove('active'));const el=document.getElementById('ms'+n);if(el){el.classList.add('active');prog(n)}setTimeout(()=>{const i=el&&el.querySelector('input');if(i)i.focus()},120)}
-function nx(f){
+
+function showStep(n){
+  document.querySelectorAll('.mstep').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById('ms'+n);
+  if(el){el.classList.add('active');prog(n)}
+  setTimeout(()=>{const i=el&&el.querySelector('input');if(i)i.focus()},120);
+}
+
+function showErr(step,msg){
+  document.querySelectorAll('.m-error').forEach(e=>{e.classList.remove('show')});
+  const el=document.getElementById('err'+step);
+  if(el){el.textContent=msg;el.classList.add('show')}
+}
+function clearErr(){
+  document.querySelectorAll('.m-error').forEach(e=>e.classList.remove('show'));
+}
+function nx(f){clearErr();
   if(f===1){
     D.fn=document.getElementById('m-fn').value.trim();
     D.ln=document.getElementById('m-ln').value.trim();
-    if(!D.fn||!D.ln){alert('Please enter your first and last name.');return}
+    if(!D.fn||!D.ln){showErr(1,'Please enter your first and last name.');return}
     showStep(2);return;
   }
   if(f===2){
     D.ph=document.getElementById('m-ph').value.trim();
-    if(!D.ph){alert('Please enter your phone number.');return}
-    showStep('2b');return;
+    if(D.ph.replace(/\D/g,'').length<10){showErr(2,'Please enter a valid phone number, e.g. (281) 123-4567.');return}
+    showStep(3);return;
   }
-  if(f==='2b'){
+  if(f===3){
     D.em=document.getElementById('m-em').value.trim();
-    if(!D.em){alert('Please enter your email address.');return}
+    if(!D.em){showErr(3,'Please enter your email address.');return}
+    const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if(!emailRe.test(D.em)){showErr(3,'That does not look like a valid email address.');return}
     showStep(4);return;
   }
-  if(f===7)D.loc=document.getElementById('m-loc').value.trim();
-  showStep(f+1);
+  if(f===4){
+    const sel=document.querySelectorAll('#ms4opts .mopt.sel');
+    if(sel.length===0){showErr(4,'Please select at least one project type to continue.');return}
+    D.project=Array.from(sel).map(b=>b.dataset.v).join(', ');
+    showStep(5);return;
+  }
+  if(f===5){
+    const s=document.querySelector('#ms5opts .mopt.sel');
+    if(!s){showErr(5,'Please select a budget range to continue.');return}
+    D.budget=s.dataset.v;
+    showStep(6);return;
+  }
+  if(f===6){
+    const s=document.querySelector('#ms6opts .mopt.sel');
+    if(!s){showErr(6,'Please select a timeline to continue.');return}
+    D.timeline=s.dataset.v;
+    showStep(7);return;
+  }
+  if(f===7){
+    D.loc=document.getElementById('m-loc').value.trim();
+    if(!D.loc){showErr(7,'Please enter a neighborhood or city.');return}
+    showStep(8);return;
+  }
 }
+
 function pv(f){
-  if(f==='2b'){showStep(2);return}
-  if(f===4){showStep('2b');return}
-  showStep(f-1);
+  const prev={2:1,3:2,4:3,5:4,6:5,7:6,8:7};
+  showStep(prev[f]||1);
 }
+
 function ek(e,s){if(e.key==='Enter'){e.preventDefault();nx(s)}}
-function sel(btn,gid){document.querySelectorAll('#'+gid+' .mopt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');D[gid]=btn.dataset.v}
-function tog(btn,gid){btn.classList.toggle('sel');D[gid]=Array.from(document.querySelectorAll('#'+gid+' .mopt.sel')).map(b=>b.dataset.v).join(', ')}
-function submit(){D.src=document.querySelector('#ms7o .mopt.sel')?.dataset.v||'';document.getElementById('mbody').style.display='none';document.getElementById('msuccess').classList.add('show');document.getElementById('mpf').style.width='100%';document.getElementById('ms-name').textContent=D.fn||'there';setTimeout(confetti,200)}
+
+function sel(btn,gid){
+  document.querySelectorAll('#'+gid+' .mopt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function tog(btn,gid){
+  btn.classList.toggle('sel');
+}
+
+function fmtPhone(input){
+  let v=input.value.replace(/\D/g,'').substring(0,10);
+  let out='';
+  if(v.length>0) out='('+v.substring(0,3);
+  if(v.length>=4) out+=') '+v.substring(3,6);
+  if(v.length>=7) out+='-'+v.substring(6,10);
+  input.value=out;
+}
+
+function submit(){
+  D.src=document.querySelector('#ms8opts .mopt.sel')?.dataset.v||'';
+  document.getElementById('mbody').style.display='none';
+  document.getElementById('msuccess').classList.add('show');
+  document.getElementById('mpf').style.width='100%';
+  document.getElementById('ms-name').textContent=D.fn||'there';
+  setTimeout(confetti,200);
+}
+
 function confetti(){
   const c=document.getElementById('confetti'),ctx=c.getContext('2d');
   c.width=window.innerWidth;c.height=window.innerHeight;
