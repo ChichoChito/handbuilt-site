@@ -366,8 +366,62 @@ footer{
   background:var(--ink);padding:20px 48px;
   display:flex;justify-content:space-between;align-items:center;
 }
-.f-l{font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.2)}
-.f-r{font-size:.52rem;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.1)}
+/* Footer */
+footer{background:var(--ink);color:var(--white)}
+.footer-top{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;
+  padding:64px 48px 48px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.ft-logo{
+  font-size:.8rem;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--white);
+  border-bottom:2px solid var(--green);
+  display:inline-block;padding-bottom:2px;margin-bottom:10px;
+}
+.ft-tagline{
+  font-size:.56rem;font-weight:300;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:6px;
+}
+.ft-location{
+  font-size:.72rem;font-weight:300;color:rgba(255,255,255,.2);margin-bottom:4px;
+}
+.ft-appt{
+  font-size:.62rem;font-weight:300;color:rgba(255,255,255,.12);
+  font-style:italic;letter-spacing:.02em;
+}
+.ft-col-head{
+  font-size:.56rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.3);
+  margin-bottom:16px;
+}
+.ft-links{display:flex;flex-direction:column;gap:8px}
+.ft-link{
+  font-size:.8rem;font-weight:300;color:rgba(255,255,255,.4);
+  cursor:default;transition:color .15s;
+}
+.ft-link:hover{color:rgba(255,255,255,.7)}
+.ft-social{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.ft-social-link{
+  display:flex;align-items:center;gap:10px;
+  font-size:.78rem;font-weight:300;color:rgba(255,255,255,.35);
+  text-decoration:none;transition:color .2s;
+}
+.ft-social-link:hover{color:rgba(255,255,255,.7)}
+.ft-cta{
+  display:inline-block;
+  font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--white);background:var(--green);
+  padding:10px 20px;text-decoration:none;
+  transition:background .2s;
+}
+.ft-cta:hover{background:var(--green2)}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 48px;
+}
+.fb-copy{font-size:.58rem;font-weight:300;color:rgba(255,255,255,.15);letter-spacing:.04em}
+.fb-site{font-size:.58rem;font-weight:300;color:rgba(255,255,255,.15);letter-spacing:.08em;text-transform:uppercase}
 
 /* ══════════════
    MODAL
@@ -425,6 +479,9 @@ footer{
   color:var(--ink);outline:none;transition:border-color .2s;
   display:block;margin-bottom:8px;font-family:var(--sans);
 }
+.mi-label{display:block;font-size:.56rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.mi-req{color:#cc0000}
+.mi-group{display:flex;flex-direction:column;margin-bottom:8px}
 .mi::placeholder{color:var(--muted)}
 .mi:focus{border-color:var(--ink)}
 .mi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
@@ -494,7 +551,9 @@ footer{
   .territory{padding:56px 24px}
   .territory-top{margin-bottom:32px}
   .territory-grid{grid-template-columns:1fr}
-  footer{padding:18px 24px}
+  footer{}
+  .footer-top{grid-template-columns:1fr;gap:36px;padding:48px 24px 36px}
+  .footer-bottom{padding:16px 24px;flex-direction:column;gap:6px;text-align:center}
   .modal{max-width:100%;max-height:100vh;height:100%}
   .overlay{align-items:flex-end}
   .mbody{padding:32px 24px}
@@ -517,25 +576,40 @@ footer{
     <button class="mclose" onclick="closeModal()">Close ✕</button>
     <div class="mbody" id="mbody">
       <div class="mstep active" id="ms1">
-        <div class="mstep-n">1 of 7</div>
+        <div class="mstep-n">1 of 8</div>
         <div class="mstep-q">What is your name?</div>
-        <div class="mstep-hint">Good to know who we are talking to.</div>
         <div class="mi-row">
-          <input class="mi" type="text" placeholder="First name" id="m-fn" onkeydown="ek(event,1)"/>
-          <input class="mi" type="text" placeholder="Last name" id="m-ln" onkeydown="ek(event,1)"/>
+          <div class="mi-group">
+            <label class="mi-label">First Name <span class="mi-req">*</span></label>
+            <input class="mi" type="text" placeholder="First name" id="m-fn" required onkeydown="ek(event,1)"/>
+          </div>
+          <div class="mi-group">
+            <label class="mi-label">Last Name <span class="mi-req">*</span></label>
+            <input class="mi" type="text" placeholder="Last name" id="m-ln" required onkeydown="ek(event,1)"/>
+          </div>
         </div>
         <div class="mnav"><span></span><button class="m-next" onclick="nx(1)">Continue</button></div>
       </div>
       <div class="mstep" id="ms2">
-        <div class="mstep-n">2 of 7</div>
-        <div class="mstep-q">How do we reach you?</div>
-        <div class="mstep-hint">We will call, not spam.</div>
-        <input class="mi" type="tel" placeholder="Phone number" id="m-ph" onkeydown="ek(event,2)"/>
-        <input class="mi" type="email" placeholder="Email address" id="m-em" onkeydown="ek(event,2)"/>
+        <div class="mstep-n">2 of 8</div>
+        <div class="mstep-q">What is your phone number?</div>
+        <div class="mi-group">
+          <label class="mi-label">Phone Number <span class="mi-req">*</span></label>
+          <input class="mi" type="tel" placeholder="(000) 000-0000" id="m-ph" required onkeydown="ek(event,2)"/>
+        </div>
         <div class="mnav"><button class="m-back" onclick="pv(2)">Back</button><button class="m-next" onclick="nx(2)">Continue</button></div>
       </div>
-      <div class="mstep" id="ms3">
-        <div class="mstep-n">3 of 7</div>
+      <div class="mstep" id="ms2b">
+        <div class="mstep-n">3 of 8</div>
+        <div class="mstep-q">What is your email address?</div>
+        <div class="mi-group">
+          <label class="mi-label">Email Address <span class="mi-req">*</span></label>
+          <input class="mi" type="email" placeholder="your@email.com" id="m-em" required onkeydown="ek(event,'2b')"/>
+        </div>
+        <div class="mnav"><button class="m-back" onclick="pv('2b')">Back</button><button class="m-next" onclick="nx('2b')">Continue</button></div>
+      </div>
+      <div class="mstep" id="ms4">
+        <div class="mstep-n">4 of 8</div>
         <div class="mstep-q">What are you building?</div>
         <div class="mstep-hint">Select all that apply.</div>
         <div class="mopts" id="ms3o">
@@ -548,8 +622,8 @@ footer{
         </div>
         <div class="mnav"><button class="m-back" onclick="pv(3)">Back</button><button class="m-next" onclick="nx(3)">Continue</button></div>
       </div>
-      <div class="mstep" id="ms4">
-        <div class="mstep-n">4 of 7</div>
+      <div class="mstep" id="ms5">
+        <div class="mstep-n">5 of 8</div>
         <div class="mstep-q">What is your approximate budget?</div>
         <div class="mstep-hint">Helps us understand the scope before we talk.</div>
         <div class="mopts" id="ms4o">
@@ -565,8 +639,8 @@ footer{
         </div>
         <div class="mnav"><button class="m-back" onclick="pv(4)">Back</button><button class="m-next" onclick="nx(4)">Continue</button></div>
       </div>
-      <div class="mstep" id="ms5">
-        <div class="mstep-n">5 of 7</div>
+      <div class="mstep" id="ms6">
+        <div class="mstep-n">6 of 8</div>
         <div class="mstep-q">When are you hoping to start?</div>
         <div class="mstep-hint">No wrong answer.</div>
         <div class="mopts" id="ms5o">
@@ -577,15 +651,15 @@ footer{
         </div>
         <div class="mnav"><button class="m-back" onclick="pv(5)">Back</button><button class="m-next" onclick="nx(5)">Continue</button></div>
       </div>
-      <div class="mstep" id="ms6">
-        <div class="mstep-n">6 of 7</div>
+      <div class="mstep" id="ms7">
+        <div class="mstep-n">7 of 8</div>
         <div class="mstep-q">Where is the property?</div>
         <div class="mstep-hint">Neighborhood or zip code is fine.</div>
-        <input class="mi" type="text" placeholder="e.g. Highland Park, 90042" id="m-loc" onkeydown="ek(event,6)"/>
+        <input class="mi" type="text" placeholder="Neighborhood or city" id="m-loc" onkeydown="ek(event,7)"/>
         <div class="mnav"><button class="m-back" onclick="pv(6)">Back</button><button class="m-next" onclick="nx(6)">Continue</button></div>
       </div>
-      <div class="mstep" id="ms7">
-        <div class="mstep-n">7 of 7</div>
+      <div class="mstep" id="ms8">
+        <div class="mstep-n">8 of 8</div>
         <div class="mstep-q">How did you hear about us?</div>
         <div class="mstep-hint">Helps us know where to show up.</div>
         <div class="mopts" id="ms7o">
@@ -652,7 +726,7 @@ footer{
     <div class="intro-col reveal rd1">
       <span class="ic-num">01</span>
       <div class="ic-h">Design first</div>
-      <p class="ic-p">Every decision made on paper before construction begins. Layout, materials, fixtures, finishes — all locked before we touch a wall.</p>
+      <p class="ic-p">Every decision made on paper before construction begins. Layout, materials, fixtures, finishes. All locked before we touch a wall.</p>
     </div>
     <div class="intro-col reveal rd2">
       <span class="ic-num">02</span>
@@ -721,7 +795,7 @@ footer{
     <div class="founder-left">
       <span class="f-label">From the Founder</span>
       <div class="f-quote">"The best projects start with trust. We earn that by being completely transparent before anyone commits to anything."</div>
-      <div class="f-attr"><strong>Luis Orts</strong> — Founder, Handbuilt</div>
+      <div class="f-attr"><strong>Luis Orts</strong>, Founder, Handbuilt</div>
     </div>
     <div class="f-right">
       <div class="f-point reveal rd1">
@@ -730,7 +804,7 @@ footer{
       </div>
       <div class="f-point reveal rd2">
         <span class="fp-l">The process</span>
-        <p class="fp-p">As-built schematic, priced mood board, elevation drawings — all completed before we break ground. You see it on paper first.</p>
+        <p class="fp-p">As-built schematic, priced mood board, elevation drawings. All completed before we break ground. You see it on paper first.</p>
       </div>
       <div class="f-point reveal rd3">
         <span class="fp-l">The standard</span>
@@ -762,25 +836,79 @@ footer{
   <div class="territory-top">
     <div class="tz-heading">Areas Served</div>
   </div>
-  <div class="territory-grid">
-    <div class="tz-block">
-      <div class="tz-lbl">Pasadena</div>
-      <div class="tz-desc">Pasadena, La Cañada Flintridge, San Marino, South Pasadena, Sierra Madre, Altadena, Glendale, and nearby Pasadena-area communities.</div>
+  <div class="territory-layout">
+    <div class="territory-map-wrap">
+      <iframe
+        class="la-map"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d212690!2d-118.2437!3d34.0522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1720000000000!5m2!1sen!2sus"
+        style="border:0;display:block;width:100%;height:100%;min-height:360px;filter:grayscale(100%) contrast(1.05);">
+      </iframe>
     </div>
-    <div class="tz-block">
-      <div class="tz-lbl">Los Angeles</div>
-      <div class="tz-desc">Hollywood, Hollywood Hills, Beverly Hills, Hancock Park, Los Feliz, Laughlin Park, Studio City, and surrounding Los Angeles neighborhoods.</div>
-    </div>
-    <div class="tz-block">
-      <div class="tz-lbl">Orange County</div>
-      <div class="tz-desc">Newport Coast, Newport Beach, Laguna Beach, Corona del Mar, Tustin, and nearby Orange County communities.</div>
+    <div class="territory-areas">
+      <div class="tz-block">
+        <div class="tz-lbl">Pasadena</div>
+        <div class="tz-desc">Pasadena, La Cañada Flintridge, San Marino, South Pasadena, Sierra Madre, Altadena, Monrovia, Arcadia, Temple City, Alhambra, San Gabriel, Glendale, Burbank, and surrounding communities.</div>
+      </div>
+      <div class="tz-block">
+        <div class="tz-lbl">Los Angeles</div>
+        <div class="tz-desc">Beverly Hills, Bel Air, Brentwood, Hollywood Hills, Hancock Park, Los Feliz, Silver Lake, Echo Park, Atwater Village, Eagle Rock, Highland Park, Glassell Park, Mount Washington, Laughlin Park, Studio City, Sherman Oaks, Encino, Pacific Palisades, Santa Monica, Mar Vista, Culver City, and surrounding neighborhoods.</div>
+      </div>
+      <div class="tz-block">
+        <div class="tz-lbl">Orange County</div>
+        <div class="tz-desc">Newport Coast, Newport Beach, Laguna Beach, Laguna Hills, Laguna Niguel, Corona del Mar, Dana Point, San Clemente, Tustin, Irvine, Anaheim Hills, Villa Park, and nearby communities.</div>
+      </div>
+      <div class="tz-block tz-block-last">
+        <div class="tz-lbl">Beyond</div>
+        <div class="tz-desc">The right project does not have a geographic limit. We travel for work that meets our standard.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="f-l">Handbuilt</div>
-  <div class="f-r">Design · Build · Manage · handbuilt.co</div>
+  <div class="footer-top">
+    <div class="ft-left">
+      <div class="ft-logo">Handbuilt</div>
+      <div class="ft-tagline">Design | Build | Manage</div>
+      <div class="ft-location">Los Angeles, California</div>
+      <div class="ft-appt">Available by appointment only</div>
+    </div>
+    <div class="ft-middle">
+      <div class="ft-col-head">Services</div>
+      <div class="ft-links">
+        <span class="ft-link">New Construction</span>
+        <span class="ft-link">Kitchen</span>
+        <span class="ft-link">Bathroom</span>
+        <span class="ft-link">ADU</span>
+        <span class="ft-link">Outdoor Living</span>
+      </div>
+    </div>
+    <div class="ft-right">
+      <div class="ft-col-head">Connect</div>
+      <div class="ft-social">
+        <a class="ft-social-link" href="#" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a class="ft-social-link" href="#" aria-label="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M8 11v5M8 8v.01M12 16v-5M16 16v-3a2 2 0 0 0-4 0"/></svg>
+          LinkedIn
+        </a>
+        <a class="ft-social-link" href="#" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+      </div>
+      <a class="ft-cta" href="#" onclick="openModal();return false;">Let's Talk</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="fb-copy">© 2026 Handbuilt. All rights reserved.</span>
+    <span class="fb-site">handbuilt.co</span>
+  </div>
 </footer>
 
 <script>
@@ -796,10 +924,33 @@ function openModal(){document.getElementById('overlay').classList.add('open');do
 function closeModal(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
 function oc(e){if(e.target===document.getElementById('overlay'))closeModal()}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-function prog(s){document.getElementById('mpf').style.width=((s-1)/7*100)+'%'}
+function prog(s){document.getElementById('mpf').style.width=((s-1)/8*100)+'%'}
 function showStep(n){document.querySelectorAll('.mstep').forEach(s=>s.classList.remove('active'));const el=document.getElementById('ms'+n);if(el){el.classList.add('active');prog(n)}setTimeout(()=>{const i=el&&el.querySelector('input');if(i)i.focus()},120)}
-function nx(f){if(f===1){D.fn=document.getElementById('m-fn').value.trim();if(!D.fn){alert('Please enter your first name.');return}D.ln=document.getElementById('m-ln').value.trim()}if(f===2){D.ph=document.getElementById('m-ph').value.trim();if(!D.ph){alert('Please enter your phone number.');return}D.em=document.getElementById('m-em').value.trim()}if(f===6)D.loc=document.getElementById('m-loc').value.trim();showStep(f+1)}
-function pv(f){showStep(f-1)}
+function nx(f){
+  if(f===1){
+    D.fn=document.getElementById('m-fn').value.trim();
+    D.ln=document.getElementById('m-ln').value.trim();
+    if(!D.fn||!D.ln){alert('Please enter your first and last name.');return}
+    showStep(2);return;
+  }
+  if(f===2){
+    D.ph=document.getElementById('m-ph').value.trim();
+    if(!D.ph){alert('Please enter your phone number.');return}
+    showStep('2b');return;
+  }
+  if(f==='2b'){
+    D.em=document.getElementById('m-em').value.trim();
+    if(!D.em){alert('Please enter your email address.');return}
+    showStep(4);return;
+  }
+  if(f===7)D.loc=document.getElementById('m-loc').value.trim();
+  showStep(f+1);
+}
+function pv(f){
+  if(f==='2b'){showStep(2);return}
+  if(f===4){showStep('2b');return}
+  showStep(f-1);
+}
 function ek(e,s){if(e.key==='Enter'){e.preventDefault();nx(s)}}
 function sel(btn,gid){document.querySelectorAll('#'+gid+' .mopt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');D[gid]=btn.dataset.v}
 function tog(btn,gid){btn.classList.toggle('sel');D[gid]=Array.from(document.querySelectorAll('#'+gid+' .mopt.sel')).map(b=>b.dataset.v).join(', ')}
@@ -839,7 +990,7 @@ function confetti(){
     });
   }
   let start=null;
-  const duration=3000;
+  const duration=5000;
   function draw(ts){
     if(!start)start=ts;
     const elapsed=ts-start;
