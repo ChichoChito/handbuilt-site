@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Design Style Quiz — Handbuilt</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#111111;--white:#FFFFFF;--off:#F5F5F5;--mid:#E0E0E0;--muted:#888888;
+  --green:#1A2E20;--green2:#243D2A;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+html{font-size:16px;overflow-x:hidden}
+body{background:var(--white);color:var(--ink);font-family:var(--sans);overflow-x:hidden;min-height:100vh}
+
+/* NAV STRIP */
+.nav-strip{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:56px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;background:var(--white);border-bottom:1px solid var(--mid);
+}
+.nav-logo{
+  font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;
+  border-bottom:2px solid var(--green);padding-bottom:2px;
+}
+.nav-back{
+  font-size:.58rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .2s;
+}
+.nav-back:hover{color:var(--ink)}
+
+/* PROGRESS BAR */
+.prog-wrap{
+  position:fixed;top:56px;left:0;right:0;z-index:100;
+  height:3px;background:var(--mid);
+}
+.prog-fill{
+  height:100%;background:var(--green);
+  transition:width .6s var(--ease);width:0%;
+}
+
+/* MAIN CONTAINER */
+.quiz-wrap{
+  min-height:100vh;padding-top:80px;
+  display:flex;flex-direction:column;
+}
+
+/* INTRO SCREEN */
+.intro-screen{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:48px;max-width:680px;margin:0 auto;width:100%;
+}
+.intro-kicker{
+  font-size:.58rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:20px;
+}
+.intro-h1{
+  font-size:clamp(2.4rem,5vw,4rem);font-weight:900;
+  letter-spacing:-.03em;line-height:.93;color:var(--ink);margin-bottom:24px;
+}
+.intro-h1 .thin{font-weight:200}
+.intro-p{
+  font-size:.92rem;font-weight:300;color:var(--muted);
+  line-height:1.8;margin-bottom:36px;max-width:480px;
+}
+.intro-meta{
+  display:flex;gap:32px;margin-bottom:40px;
+}
+.im{
+  display:flex;flex-direction:column;gap:3px;
+}
+.im-num{
+  font-size:1.4rem;font-weight:900;letter-spacing:-.03em;color:var(--ink);
+}
+.im-lbl{
+  font-size:.56rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+}
+.start-btn{
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--green);color:var(--white);border:none;
+  padding:16px 40px;cursor:pointer;transition:background .2s;
+  display:inline-block;
+}
+.start-btn:hover{background:var(--green2)}
+
+/* QUESTION SCREEN */
+.q-screen{
+  display:none;flex:1;flex-direction:column;
+  padding:48px;max-width:720px;margin:0 auto;width:100%;
+}
+.q-screen.active{display:flex}
+.q-meta{
+  display:flex;align-items:center;gap:16px;margin-bottom:32px;
+}
+.q-num{
+  font-size:.56rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.q-type-badge{
+  font-size:.5rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--green);border:1px solid var(--green);padding:3px 8px;opacity:.6;
+}
+.q-text{
+  font-size:clamp(1.4rem,3vw,2.2rem);font-weight:700;
+  letter-spacing:-.02em;line-height:1.05;color:var(--ink);margin-bottom:8px;
+}
+.q-sub{
+  font-size:.82rem;font-weight:300;color:var(--muted);
+  line-height:1.6;margin-bottom:32px;
+}
+
+/* WORD OPTIONS */
+.word-opts{display:flex;flex-direction:column;gap:6px}
+.wopt{
+  padding:16px 20px;border:1px solid var(--mid);background:var(--white);
+  cursor:pointer;text-align:left;font-family:var(--sans);
+  font-size:.9rem;font-weight:300;color:var(--muted);
+  transition:all .15s;width:100%;display:flex;justify-content:space-between;align-items:center;
+}
+.wopt:hover{border-color:var(--ink);color:var(--ink);background:var(--off)}
+.wopt.sel{border-color:var(--green);background:var(--green);color:var(--white)}
+.wopt-arrow{font-size:.7rem;opacity:.4;transition:opacity .15s}
+.wopt.sel .wopt-arrow{opacity:.6}
+
+/* VISUAL OPTIONS — image tiles */
+.visual-opts{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.vopt{
+  position:relative;cursor:pointer;
+  border:2px solid transparent;transition:border-color .15s;
+  overflow:hidden;
+}
+.vopt.sel{border-color:var(--green)}
+.vopt-img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+  transition:transform .4s var(--ease);
+  background:var(--mid);
+}
+.vopt-img.gradient{background:var(--mid)}
+.vopt:hover .vopt-img{transform:scale(1.03)}
+.vopt-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:20px 14px 12px;
+  background:linear-gradient(to top,rgba(10,10,10,.75),transparent);
+  font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--white);
+}
+.vopt-check{
+  position:absolute;top:10px;right:10px;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--green);border:2px solid var(--white);
+  display:none;align-items:center;justify-content:center;
+  font-size:.6rem;color:var(--white);
+}
+.vopt.sel .vopt-check{display:flex}
+
+/* SCALE OPTIONS */
+.scale-opts{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
+}
+.sopt{
+  padding:16px 8px;border:1px solid var(--mid);background:var(--white);
+  cursor:pointer;text-align:center;font-family:var(--sans);
+  font-size:.78rem;font-weight:300;color:var(--muted);
+  transition:all .15s;display:flex;flex-direction:column;gap:4px;
+}
+.sopt-num{font-size:1.1rem;font-weight:700;color:var(--ink)}
+.sopt:hover{border-color:var(--ink)}
+.sopt.sel{border-color:var(--green);background:var(--green);color:var(--white)}
+.sopt.sel .sopt-num{color:var(--white)}
+.scale-labels{display:flex;justify-content:space-between;margin-top:8px}
+.sl{font-size:.55rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* MULTI SELECT hint */
+.multi-hint{
+  font-size:.58rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;
+}
+
+/* NAV BUTTONS */
+.q-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:36px;padding-top:24px;border-top:1px solid var(--mid);
+}
+.q-back{
+  font-size:.58rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);background:none;border:none;cursor:pointer;transition:color .2s;
+}
+.q-back:hover{color:var(--ink)}
+.q-next{
+  font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--green);color:var(--white);border:none;
+  padding:13px 32px;cursor:pointer;transition:background .2s;
+}
+.q-next:hover{background:var(--green2)}
+.q-skip{
+  font-size:.56rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mid);background:none;border:none;cursor:pointer;transition:color .2s;
+}
+.q-skip:hover{color:var(--muted)}
+.q-error{
+  font-size:.75rem;font-weight:500;color:#cc0000;
+  margin-top:12px;display:none;
+}
+.q-error.show{display:block}
+
+/* EMAIL GATE */
+.gate-screen{
+  display:none;flex:1;flex-direction:column;justify-content:center;
+  padding:48px;max-width:560px;margin:0 auto;width:100%;
+}
+.gate-screen.active{display:flex}
+.gate-kicker{
+  font-size:.58rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--green);margin-bottom:16px;
+}
+.gate-h2{
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:700;
+  letter-spacing:-.03em;line-height:.95;color:var(--ink);margin-bottom:16px;
+}
+.gate-h2 .thin{font-weight:200}
+.gate-p{
+  font-size:.88rem;font-weight:300;color:var(--muted);
+  line-height:1.8;margin-bottom:32px;
+}
+.gate-p strong{color:var(--ink);font-weight:500}
+.gate-what{
+  display:flex;flex-direction:column;gap:10px;margin-bottom:32px;
+  padding:20px 24px;background:var(--off);border-left:3px solid var(--green);
+}
+.gw{
+  font-size:.8rem;font-weight:300;color:var(--muted);line-height:1.5;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.gw-icon{color:var(--green);font-size:.9rem;flex-shrink:0;margin-top:1px}
+.gate-fields{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.gate-input{
+  width:100%;background:var(--off);border:1px solid var(--mid);
+  padding:14px 16px;font-size:16px;font-weight:300;
+  color:var(--ink);outline:none;transition:border-color .2s;font-family:var(--sans);
+}
+.gate-input:focus{border-color:var(--ink)}
+.gate-input::placeholder{color:var(--muted)}
+.gate-btn{
+  width:100%;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--green);color:var(--white);border:none;
+  padding:16px;cursor:pointer;transition:background .2s;
+}
+.gate-btn:hover{background:var(--green2)}
+.gate-note{
+  font-size:.65rem;font-weight:300;color:var(--muted);
+  text-align:center;margin-top:10px;line-height:1.5;
+}
+.gate-error{
+  font-size:.75rem;color:#cc0000;display:none;margin-bottom:8px;
+}
+.gate-error.show{display:block}
+
+/* RESULTS SCREEN */
+.results-screen{
+  display:none;flex:1;flex-direction:column;
+  padding:48px;max-width:720px;margin:0 auto;width:100%;
+}
+.results-screen.active{display:flex}
+.results-intro{
+  font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px;
+}
+.profile-name{
+  font-size:clamp(2.4rem,6vw,5rem);font-weight:900;
+  letter-spacing:-.04em;line-height:.9;color:var(--ink);
+  margin-bottom:4px;
+}
+.profile-name .thin{font-weight:200;color:var(--muted)}
+.profile-rule{
+  width:48px;height:3px;background:var(--green);margin:20px 0;
+}
+.profile-desc{
+  font-size:.95rem;font-weight:300;color:var(--muted);
+  line-height:1.85;margin-bottom:32px;max-width:580px;
+}
+.profile-traits{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;
+  background:var(--mid);margin-bottom:40px;
+}
+.pt{background:var(--white);padding:20px 18px}
+.pt-lbl{
+  font-size:.52rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px;
+}
+.pt-val{
+  font-size:.85rem;font-weight:500;color:var(--ink);letter-spacing:-.01em;
+}
+.results-email-note{
+  background:var(--off);padding:20px 24px;margin-bottom:32px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.ren-icon{font-size:1.2rem;flex-shrink:0}
+.ren-text{font-size:.8rem;font-weight:300;color:var(--muted);line-height:1.6}
+.ren-text strong{color:var(--ink);font-weight:500}
+.results-cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.results-cta-primary{
+  font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--green);color:var(--white);border:none;
+  padding:15px 32px;cursor:pointer;transition:background .2s;
+  text-decoration:none;display:inline-block;
+}
+.results-cta-primary:hover{background:var(--green2)}
+.results-cta-secondary{
+  font-size:.62rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--mid);background:none;
+  padding:15px 32px;cursor:pointer;transition:all .2s;
+  text-decoration:none;display:inline-block;
+}
+.results-cta-secondary:hover{border-color:var(--ink);color:var(--ink)}
+
+/* VISUAL INSPIRATION COLORS — used as CSS backgrounds since no real photos */
+
+
+
+
+
+
+
+
+
+.vopt-img.gradient{width:100%;aspect-ratio:4/3;display:block}
+
+@media(max-width:680px){
+  .nav-strip{padding:0 20px}
+  .intro-screen,.q-screen,.gate-screen,.results-screen{padding:32px 20px}
+  .visual-opts{grid-template-columns:1fr 1fr}
+  .scale-opts{grid-template-columns:repeat(5,1fr)}
+  .profile-traits{grid-template-columns:1fr}
+  .results-cta-row{flex-direction:column}
+  .results-cta-primary,.results-cta-secondary{text-align:center}
+  .intro-meta{gap:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV STRIP -->
+<div class="nav-strip">
+  <a class="nav-logo" href="index.html">Handbuilt</a>
+  <a class="nav-back" href="index.html">← Back to site</a>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-wrap"><div class="prog-fill" id="prog"></div></div>
+
+<div class="quiz-wrap" id="qwrap">
+
+<!-- INTRO -->
+<div class="intro-screen" id="intro">
+  <div class="intro-kicker">Handbuilt Design Quiz</div>
+  <h1 class="intro-h1">
+    <span class="thin">Discover your</span><br>
+    design<br>
+    identity.
+  </h1>
+  <p class="intro-p">Twelve questions about how you live, what moves you, and what your home should feel like. At the end, you will know exactly what to ask for.</p>
+  <div class="intro-meta">
+    <div class="im"><div class="im-num">12</div><div class="im-lbl">Questions</div></div>
+    <div class="im"><div class="im-num">5</div><div class="im-lbl">Minutes</div></div>
+    <div class="im"><div class="im-num">6</div><div class="im-lbl">Profiles</div></div>
+  </div>
+  <button class="start-btn" onclick="startQuiz()">Start the Quiz</button>
+</div>
+
+<!-- Q1: First impression -->
+<div class="q-screen" id="q1">
+  <div class="q-meta"><span class="q-num">1 of 12</span><span class="q-type-badge">Lifestyle</span></div>
+  <div class="q-text">You walk into a hotel lobby and feel immediately at home. What does it look like?</div>
+  <div class="q-sub">Trust your gut. There is no wrong answer.</div>
+  <div class="word-opts" id="q1opts">
+    <button class="wopt" data-v="A" data-s="MCA:2,MID:1" onclick="selW(this,'q1opts')"><span>Warm wood, concrete floors, floor-to-ceiling glass and plants everywhere</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="B" data-s="MID:2,COL:1" onclick="selW(this,'q1opts')"><span>Low slung furniture, walnut panels, a fireplace and a view</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="C" data-s="WMI:2,COL:1" onclick="selW(this,'q1opts')"><span>Minimal but warm — a few perfect things, a lot of breathing room</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="D" data-s="SPA:2,COL:1" onclick="selW(this,'q1opts')"><span>Arched doorways, plaster walls, hand-thrown ceramics and terracotta</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="E" data-s="COL:2,MID:1" onclick="selW(this,'q1opts')"><span>Collected and layered — art everywhere, books, things with history</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="F" data-s="LUX:2,WMI:1" onclick="selW(this,'q1opts')"><span>Dark marble, dramatic lighting, high contrast and completely considered</span><span class="wopt-arrow">→</span></button>
+  </div>
+  <div class="q-error" id="err1">Please select an option to continue.</div>
+  <div class="q-nav"><span></span><button class="q-next" onclick="nextQ(1)">Continue</button></div>
+</div>
+
+<!-- Q2: Visual inspiration -->
+<div class="q-screen" id="q2">
+  <div class="q-meta"><span class="q-num">2 of 12</span><span class="q-type-badge">Visual</span></div>
+  <div class="q-text">Which palette feels most like home?</div>
+  <div class="q-sub">Pick the one you are drawn to, not the one you think you should pick.</div>
+  <div class="visual-opts" id="q2opts">
+    <div class="vopt" data-v="A" data-s="MCA:2,WMI:1" onclick="selV(this,'q2opts')">
+      <img src="https://images.unsplash.com/photo-1764526624453-db32c24eca55?w=800&q=72&auto=format&fit=crop" alt="Modern California interior" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Sand, sage, warm white</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="B" data-s="MID:2,COL:1" onclick="selV(this,'q2opts')">
+      <img src="https://images.unsplash.com/photo-1648494861938-27dfcba882d8?w=800&q=72&auto=format&fit=crop" alt="Mid century modern interior" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Amber, walnut, olive</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="C" data-s="WMI:2,MCA:1" onclick="selV(this,'q2opts')">
+      <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=72&auto=format&fit=crop" alt="Warm minimalist interior" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Linen, stone, cream</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="D" data-s="SPA:2,COL:1" onclick="selV(this,'q2opts')">
+      <img src="https://images.unsplash.com/photo-1716990513870-4cff4ccad38c?w=800&q=72&auto=format&fit=crop" alt="Spanish Mediterranean interior" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Terracotta, clay, iron</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="E" data-s="COL:2,MID:1" onclick="selV(this,'q2opts')">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=72&auto=format&fit=crop" alt="Collected layered interior" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Forest, brass, aged linen</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="F" data-s="LUX:2,WMI:1" onclick="selV(this,'q2opts')">
+      <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=800&q=72&auto=format&fit=crop" alt="Contemporary luxe interior" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Charcoal, black, steel</div>
+      <div class="vopt-check">✓</div>
+    </div>
+  </div>
+  <div class="q-error" id="err2">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(2)">Back</button><button class="q-next" onclick="nextQ(2)">Continue</button></div>
+</div>
+
+<!-- Q3: How they use their home -->
+<div class="q-screen" id="q3">
+  <div class="q-meta"><span class="q-num">3 of 12</span><span class="q-type-badge">Lifestyle</span></div>
+  <div class="q-text">On a Saturday evening, your home is at its best when it is…</div>
+  <div class="q-sub">Think about how you actually live, not how you think you should.</div>
+  <div class="word-opts" id="q3opts">
+    <button class="wopt" data-v="A" data-s="MCA:2,LUX:1" onclick="selW(this,'q3opts')"><span>Full of people — a dinner party spilling from the kitchen to the patio</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="B" data-s="WMI:2,MID:1" onclick="selW(this,'q3opts')"><span>Quiet and intentional — good music, low light, a meal you cooked yourself</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="C" data-s="COL:2,SPA:1" onclick="selW(this,'q3opts')"><span>Relaxed and layered — family, books, something good on but not really watching</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="D" data-s="LUX:2,MCA:1" onclick="selW(this,'q3opts')"><span>Elevated — guests notice the details, everything considered, nothing accidental</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="E" data-s="MID:2,WMI:1" onclick="selW(this,'q3opts')"><span>Open and connected — kids, dogs, the outdoors and indoors are the same space</span><span class="wopt-arrow">→</span></button>
+  </div>
+  <div class="q-error" id="err3">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(3)">Back</button><button class="q-next" onclick="nextQ(3)">Continue</button></div>
+</div>
+
+<!-- Q4: Materials -->
+<div class="q-screen" id="q4">
+  <div class="q-meta"><span class="q-num">4 of 12</span><span class="q-type-badge">Visual</span></div>
+  <div class="q-text">Which material combination speaks to you most?</div>
+  <div class="q-sub">Your gut reaction in the first two seconds.</div>
+  <div class="visual-opts" id="q4opts">
+    <div class="vopt" data-v="A" data-s="MCA:2,WMI:1" onclick="selV(this,'q4opts')">
+      <img src="https://images.unsplash.com/photo-1764526624453-db32c24eca55?w=800&q=72&auto=format&fit=crop" alt="White oak and limestone" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">White oak + honed limestone</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="B" data-s="MID:2,COL:1" onclick="selV(this,'q4opts')">
+      <img src="https://images.unsplash.com/photo-1648494861938-27dfcba882d8?w=800&q=72&auto=format&fit=crop" alt="Walnut brass tile" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Walnut + brushed brass + tile</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="C" data-s="SPA:2,COL:1" onclick="selV(this,'q4opts')">
+      <img src="https://images.unsplash.com/photo-1716990513870-4cff4ccad38c?w=800&q=72&auto=format&fit=crop" alt="Plaster terracotta iron" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Plaster + terracotta + iron</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="D" data-s="WMI:2,MCA:1" onclick="selV(this,'q4opts')">
+      <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=72&auto=format&fit=crop" alt="Concrete linen stone" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Concrete + linen + matte stone</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="E" data-s="COL:2,MID:1" onclick="selV(this,'q4opts')">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=72&auto=format&fit=crop" alt="Aged wood patinated metal" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Aged wood + patinated metal + rattan</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="F" data-s="LUX:2,WMI:1" onclick="selV(this,'q4opts')">
+      <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=800&q=72&auto=format&fit=crop" alt="Marble lacquer steel" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Marble + lacquer + steel</div>
+      <div class="vopt-check">✓</div>
+    </div>
+  </div>
+  <div class="q-error" id="err4">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(4)">Back</button><button class="q-next" onclick="nextQ(4)">Continue</button></div>
+</div>
+
+<!-- Q5: Design priority -->
+<div class="q-screen" id="q5">
+  <div class="q-meta"><span class="q-num">5 of 12</span><span class="q-type-badge">Values</span></div>
+  <div class="q-text">When you walk into a beautifully designed room, what do you notice first?</div>
+  <div class="word-opts" id="q5opts">
+    <button class="wopt" data-v="A" data-s="WMI:2,MCA:1" onclick="selW(this,'q5opts')"><span>The quality of light and how the space breathes</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="B" data-s="COL:2,MID:1" onclick="selW(this,'q5opts')"><span>The things — the art, the objects, what was chosen and why</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="C" data-s="LUX:2,WMI:1" onclick="selW(this,'q5opts')"><span>The materials — how they feel, their weight and finish</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="D" data-s="MCA:2,MID:1" onclick="selW(this,'q5opts')"><span>How the space flows — the relationship between inside and outside</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="E" data-s="SPA:2,COL:1" onclick="selW(this,'q5opts')"><span>The architecture itself — the bones, the details, what is built in</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="F" data-s="MID:2,LUX:1" onclick="selW(this,'q5opts')"><span>The mood — how it makes me feel before I can articulate why</span><span class="wopt-arrow">→</span></button>
+  </div>
+  <div class="q-error" id="err5">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(5)">Back</button><button class="q-next" onclick="nextQ(5)">Continue</button></div>
+</div>
+
+<!-- Q6: Kitchen style -->
+<div class="q-screen" id="q6">
+  <div class="q-meta"><span class="q-num">6 of 12</span><span class="q-type-badge">Visual</span></div>
+  <div class="q-text">Your ideal kitchen in one image.</div>
+  <div class="q-sub">This one gets specific. Pick the direction that excites you.</div>
+  <div class="visual-opts" id="q6opts">
+    <div class="vopt" data-v="A" data-s="MCA:2,WMI:1" onclick="selV(this,'q6opts')">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=72&auto=format&fit=crop" alt="White oak kitchen" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">White oak, stone counters, open shelving</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="B" data-s="MID:2,COL:1" onclick="selV(this,'q6opts')">
+      <img src="https://images.unsplash.com/photo-1648494861938-27dfcba882d8?w=800&q=72&auto=format&fit=crop" alt="Brass hardware zellige tile kitchen" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Flat-front cabinets, brass hardware, zellige tile</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="C" data-s="SPA:2,COL:1" onclick="selV(this,'q6opts')">
+      <img src="https://images.unsplash.com/photo-1716990513870-4cff4ccad38c?w=800&q=72&auto=format&fit=crop" alt="Spanish kitchen terracotta" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Painted shaker, terracotta floor, unlacquered brass</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="D" data-s="WMI:2,LUX:1" onclick="selV(this,'q6opts')">
+      <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=72&auto=format&fit=crop" alt="Minimal slab stone kitchen" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Integrated handles, slab stone, nothing extra</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="E" data-s="COL:2,MID:1" onclick="selV(this,'q6opts')">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=72&auto=format&fit=crop" alt="Custom kitchen built ins" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Custom built-ins, open racks, a mix of old and new</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="F" data-s="LUX:2,WMI:1" onclick="selV(this,'q6opts')">
+      <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=800&q=72&auto=format&fit=crop" alt="Dark dramatic kitchen" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Dark cabinets, fluted detail, dramatic stone</div>
+      <div class="vopt-check">✓</div>
+    </div>
+  </div>
+  <div class="q-error" id="err6">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(6)">Back</button><button class="q-next" onclick="nextQ(6)">Continue</button></div>
+</div>
+
+<!-- Q7: Clutter tolerance -->
+<div class="q-screen" id="q7">
+  <div class="q-meta"><span class="q-num">7 of 12</span><span class="q-type-badge">Values</span></div>
+  <div class="q-text">How do you feel about things being visible?</div>
+  <div class="q-sub">Books, art, objects, collections. More or less?</div>
+  <div class="scale-opts" id="q7opts">
+    <div class="sopt" data-v="1" data-s="WMI:3,LUX:1" onclick="selS(this,'q7opts')"><div class="sopt-num">1</div></div>
+    <div class="sopt" data-v="2" data-s="WMI:2,MCA:1" onclick="selS(this,'q7opts')"><div class="sopt-num">2</div></div>
+    <div class="sopt" data-v="3" data-s="MCA:1,MID:1" onclick="selS(this,'q7opts')"><div class="sopt-num">3</div></div>
+    <div class="sopt" data-v="4" data-s="COL:2,MID:1" onclick="selS(this,'q7opts')"><div class="sopt-num">4</div></div>
+    <div class="sopt" data-v="5" data-s="COL:3,SPA:1" onclick="selS(this,'q7opts')"><div class="sopt-num">5</div></div>
+  </div>
+  <div class="scale-labels"><span class="sl">Everything hidden</span><span class="sl">Everything visible</span></div>
+  <div class="q-error" id="err7">Please select a value to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(7)">Back</button><button class="q-next" onclick="nextQ(7)">Continue</button></div>
+</div>
+
+<!-- Q8: Outdoor relationship -->
+<div class="q-screen" id="q8">
+  <div class="q-meta"><span class="q-num">8 of 12</span><span class="q-type-badge">Lifestyle</span></div>
+  <div class="q-text">How important is the connection between indoor and outdoor space?</div>
+  <div class="word-opts" id="q8opts">
+    <button class="wopt" data-v="A" data-s="MCA:3" onclick="selW(this,'q8opts')"><span>Essential — I want to forget where the house ends and the outside begins</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="B" data-s="MCA:2,MID:1" onclick="selW(this,'q8opts')"><span>Important — a great patio or garden is part of the design</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="C" data-s="COL:1,SPA:1" onclick="selW(this,'q8opts')"><span>Nice to have — I appreciate it but it is not the priority</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="D" data-s="WMI:2,LUX:1" onclick="selW(this,'q8opts')"><span>Less important — my focus is on the interior</span><span class="wopt-arrow">→</span></button>
+  </div>
+  <div class="q-error" id="err8">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(8)">Back</button><button class="q-next" onclick="nextQ(8)">Continue</button></div>
+</div>
+
+<!-- Q9: Age of things -->
+<div class="q-screen" id="q9">
+  <div class="q-meta"><span class="q-num">9 of 12</span><span class="q-type-badge">Values</span></div>
+  <div class="q-text">How do you feel about mixing old things with new ones?</div>
+  <div class="word-opts" id="q9opts">
+    <button class="wopt" data-v="A" data-s="COL:3,SPA:1" onclick="selW(this,'q9opts')"><span>Love it — pieces with history make a space feel alive and personal</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="B" data-s="MID:2,COL:1" onclick="selW(this,'q9opts')"><span>Yes, selectively — one or two vintage pieces anchoring a modern space</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="C" data-s="WMI:2,LUX:1" onclick="selW(this,'q9opts')"><span>Prefer new — I want everything to feel considered and of a piece</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="D" data-s="LUX:2,MCA:1" onclick="selW(this,'q9opts')"><span>Everything new — I want the space to feel completely fresh</span><span class="wopt-arrow">→</span></button>
+  </div>
+  <div class="q-error" id="err9">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(9)">Back</button><button class="q-next" onclick="nextQ(9)">Continue</button></div>
+</div>
+
+<!-- Q10: Bathroom vibe -->
+<div class="q-screen" id="q10">
+  <div class="q-meta"><span class="q-num">10 of 12</span><span class="q-type-badge">Visual</span></div>
+  <div class="q-text">Your ideal bathroom is…</div>
+  <div class="visual-opts" id="q10opts">
+    <div class="vopt" data-v="A" data-s="WMI:2,MCA:1" onclick="selV(this,'q10opts')">
+      <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=72&auto=format&fit=crop" alt="Spa bathroom stone" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Spa-like, serene, stone and stillness</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="B" data-s="MID:2,COL:1" onclick="selV(this,'q10opts')">
+      <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=72&auto=format&fit=crop" alt="Warm graphic tile bathroom" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Warm and graphic — tile, color, personality</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="C" data-s="SPA:2,COL:1" onclick="selV(this,'q10opts')">
+      <img src="https://images.unsplash.com/photo-1716990513870-4cff4ccad38c?w=800&q=72&auto=format&fit=crop" alt="Handcrafted bathroom" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Handcrafted — encaustic tile, plaster, unlacquered fixtures</div>
+      <div class="vopt-check">✓</div>
+    </div>
+    <div class="vopt" data-v="D" data-s="LUX:2,WMI:1" onclick="selV(this,'q10opts')">
+      <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=72&auto=format&fit=crop" alt="Dramatic luxe bathroom" class="vopt-img" loading="lazy"/>
+      <div class="vopt-label">Dramatic — book-matched stone, freestanding tub, bold lighting</div>
+      <div class="vopt-check">✓</div>
+    </div>
+  </div>
+  <div class="q-error" id="err10">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(10)">Back</button><button class="q-next" onclick="nextQ(10)">Continue</button></div>
+</div>
+
+<!-- Q11: Decision making -->
+<div class="q-screen" id="q11">
+  <div class="q-meta"><span class="q-num">11 of 12</span><span class="q-type-badge">Values</span></div>
+  <div class="q-text">When it comes to design decisions, you tend to…</div>
+  <div class="word-opts" id="q11opts">
+    <button class="wopt" data-v="A" data-s="COL:2,SPA:1" onclick="selW(this,'q11opts')"><span>Trust my instincts — I know what I like when I see it</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="B" data-s="WMI:2,LUX:1" onclick="selW(this,'q11opts')"><span>Research thoroughly — I want to understand every option before deciding</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="C" data-s="MCA:2,MID:1" onclick="selW(this,'q11opts')"><span>Collaborate — I have a direction but want a designer to push it further</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="D" data-s="LUX:2,COL:1" onclick="selW(this,'q11opts')"><span>Delegate — I have taste and a vision, I want someone I trust to execute it</span><span class="wopt-arrow">→</span></button>
+  </div>
+  <div class="q-error" id="err11">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(11)">Back</button><button class="q-next" onclick="nextQ(11)">Continue</button></div>
+</div>
+
+<!-- Q12: One word -->
+<div class="q-screen" id="q12">
+  <div class="q-meta"><span class="q-num">12 of 12</span><span class="q-type-badge">Values</span></div>
+  <div class="q-text">If your home had to make one statement, what would it be?</div>
+  <div class="word-opts" id="q12opts">
+    <button class="wopt" data-v="A" data-s="WMI:3" onclick="selW(this,'q12opts')"><span>Calm</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="B" data-s="MCA:3" onclick="selW(this,'q12opts')"><span>Connected</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="C" data-s="COL:3" onclick="selW(this,'q12opts')"><span>Personal</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="D" data-s="MID:3" onclick="selW(this,'q12opts')"><span>Warm</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="E" data-s="SPA:3" onclick="selW(this,'q12opts')"><span>Rooted</span><span class="wopt-arrow">→</span></button>
+    <button class="wopt" data-v="F" data-s="LUX:3" onclick="selW(this,'q12opts')"><span>Considered</span><span class="wopt-arrow">→</span></button>
+  </div>
+  <div class="q-error" id="err12">Please select an option to continue.</div>
+  <div class="q-nav"><button class="q-back" onclick="prevQ(12)">Back</button><button class="q-next" onclick="showGate()">See My Profile</button></div>
+</div>
+
+<!-- EMAIL GATE -->
+<div class="gate-screen" id="gate">
+  <div class="gate-kicker">Almost there</div>
+  <h2 class="gate-h2">
+    <span class="thin">Your profile</span><br>
+    is ready.
+  </h2>
+  <p class="gate-p">Enter your name and email and we will send you <strong>your full design profile</strong> plus the <strong>Handbuilt Design-Build Guide</strong> — everything you need to walk into any design conversation prepared.</p>
+  <div class="gate-what">
+    <div class="gw"><span class="gw-icon">◻</span><span>Your named style profile with a full written description of your aesthetic</span></div>
+    <div class="gw"><span class="gw-icon">◻</span><span>Your top material and finish directions for reference during selections</span></div>
+    <div class="gw"><span class="gw-icon">◻</span><span>The Handbuilt Design-Build Guide — how to think about your project before you start</span></div>
+  </div>
+  <div class="gate-error" id="gate-error"></div>
+  <div class="gate-fields">
+    <input class="gate-input" type="text" placeholder="First name" id="g-name"/>
+    <input class="gate-input" type="email" placeholder="Email address" id="g-email"/>
+  </div>
+  <button class="gate-btn" onclick="submitGate()">Send My Results</button>
+  <div class="gate-note">No spam. Just your results and one useful guide. Unsubscribe anytime.</div>
+</div>
+
+<!-- RESULTS -->
+<div class="results-screen" id="results">
+  <div class="results-intro">Your Design Profile</div>
+  <div class="profile-name" id="profile-name">Modern<br><span class="thin">Californian</span></div>
+  <div class="profile-rule"></div>
+  <p class="profile-desc" id="profile-desc">You are drawn to spaces that feel grounded in nature but resolved in craft. Light matters more than color. Materials matter more than furniture. You want the bones of the house to be beautiful — not what you put in front of them.</p>
+  <div class="profile-traits" id="profile-traits">
+    <div class="pt"><div class="pt-lbl">Palette</div><div class="pt-val" id="pt-palette">Sand, sage, warm white</div></div>
+    <div class="pt"><div class="pt-lbl">Materials</div><div class="pt-val" id="pt-materials">White oak, honed stone, concrete</div></div>
+    <div class="pt"><div class="pt-lbl">Signature</div><div class="pt-val" id="pt-signature">Indoor-outdoor connection</div></div>
+  </div>
+  <div class="results-email-note">
+    <span class="ren-icon">✉</span>
+    <div class="ren-text">Your full profile and the <strong>Handbuilt Design-Build Guide</strong> are on their way to your inbox. Check your email in the next few minutes.</div>
+  </div>
+  <div class="results-cta-row">
+    <a class="results-cta-primary" href="index.html" onclick="openParentModal()">Let's Talk</a>
+    <a class="results-cta-secondary" href="process.html">See How We Work</a>
+  </div>
+</div>
+
+</div><!-- end quiz-wrap -->
+
+<script>
+// SCORING ENGINE
+const scores = {MCA:0, MID:0, WMI:0, SPA:0, COL:0, LUX:0};
+const answers = {};
+let currentQ = 0;
+
+const PROFILES = {
+  MCA: {
+    name: ['Modern','Californian'],
+    desc: 'You are drawn to spaces that feel grounded in nature but resolved in craft. Light matters more than color. Materials matter more than furniture. You want the bones of the house to be beautiful — not what you put in front of them. Indoor-outdoor living is not a feature for you, it is the whole point.',
+    palette: 'Sand, sage, warm white',
+    materials: 'White oak, honed stone, concrete',
+    signature: 'Indoor-outdoor connection'
+  },
+  MID: {
+    name: ['Mid-Century','Modern'],
+    desc: 'You love warmth, but it has to be intentional. Rich wood tones, a fireplace with purpose, furniture that looks comfortable because it is. You are drawn to the era when design was optimistic and functional at the same time — and you want that feeling in a home that feels thoroughly of this moment.',
+    palette: 'Walnut, amber, olive, brass',
+    materials: 'Walnut, zellige tile, brushed brass',
+    signature: 'Warm geometry and craft detail'
+  },
+  WMI: {
+    name: ['Warm','Minimalist'],
+    desc: 'You have strong opinions about what should not be in a room. Restraint is your default and texture is your indulgence. You want spaces that breathe — where each material was chosen because it earns its place. Nothing decorative, everything considered, and a quiet that feels like arrival.',
+    palette: 'Linen, stone, cream, matte black',
+    materials: 'Concrete, honed limestone, plaster',
+    signature: 'Negative space as a design element'
+  },
+  SPA: {
+    name: ['Spanish','Mediterranean'],
+    desc: 'You are drawn to spaces that feel like they were built by hand, over time, with deep roots in place. Plaster walls that hold light differently at noon than at dusk. Terracotta that gets better with age. The kind of architecture that makes you feel like you are somewhere specific — not anywhere.',
+    palette: 'Terracotta, clay, white plaster, iron',
+    materials: 'Lime plaster, terracotta, hand-forged iron',
+    signature: 'Crafted surfaces and architectural detail'
+  },
+  COL: {
+    name: ['Collected','and Layered'],
+    desc: 'Your home is a record of a life lived with curiosity. You are not decorating — you are curating. Pieces that mean something sit alongside things that are simply beautiful. Old and new coexist without explanation. The result is a space that could only belong to you, and that is exactly the point.',
+    palette: 'Forest green, aged brass, natural linen',
+    materials: 'Aged wood, patinated metal, natural textiles',
+    signature: 'Personal objects as architecture'
+  },
+  LUX: {
+    name: ['Contemporary','Luxe'],
+    desc: 'You want nothing left to chance. Every material at its highest expression, every detail resolved before the first board goes up. You are drawn to contrast — light and dark, hard and soft, the expected subverted. The result should be unmistakable: a home that communicates taste without announcing it.',
+    palette: 'Charcoal, black, white, polished stone',
+    materials: 'Book-matched marble, lacquer, steel',
+    signature: 'High contrast, high craft'
+  }
+};
+
+function updateProg(q) {
+  const pct = q === 0 ? 0 : (q / 12) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+}
+
+function startQuiz() {
+  document.getElementById('intro').style.display = 'none';
+  showQ(1);
+}
+
+function showQ(n) {
+  document.querySelectorAll('.q-screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('q' + n);
+  if (el) { el.classList.add('active'); currentQ = n; }
+  updateProg(n);
+  window.scrollTo(0, 0);
+}
+
+function addScores(dataS) {
+  if (!dataS) return;
+  dataS.split(',').forEach(pair => {
+    const [key, val] = pair.split(':');
+    if (scores[key] !== undefined) scores[key] += parseInt(val);
+  });
+}
+
+function getSelectedScore(id) {
+  const el = document.querySelector('#' + id + ' .sel');
+  return el ? el.dataset.s : null;
+}
+
+function nextQ(n) {
+  const s = getSelectedScore('q' + n + 'opts');
+  if (!s) {
+    const err = document.getElementById('err' + n);
+    if (err) { err.classList.add('show'); }
+    return;
+  }
+  const err = document.getElementById('err' + n);
+  if (err) err.classList.remove('show');
+  addScores(s);
+  answers[n] = s;
+  if (n < 12) showQ(n + 1);
+}
+
+function prevQ(n) {
+  // Remove score contribution of current answer
+  const prev = answers[n - 1];
+  if (prev) {
+    prev.split(',').forEach(pair => {
+      const [key, val] = pair.split(':');
+      if (scores[key] !== undefined) scores[key] -= parseInt(val);
+    });
+  }
+  showQ(n - 1);
+}
+
+function showGate() {
+  const s = getSelectedScore('q12opts');
+  if (!s) {
+    document.getElementById('err12').classList.add('show');
+    return;
+  }
+  addScores(s);
+  answers[12] = s;
+  document.querySelectorAll('.q-screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('gate').classList.add('active');
+  updateProg(12);
+  window.scrollTo(0, 0);
+  setTimeout(() => document.getElementById('g-name').focus(), 200);
+}
+
+function submitGate() {
+  const name = document.getElementById('g-name').value.trim();
+  const email = document.getElementById('g-email').value.trim();
+  const err = document.getElementById('gate-error');
+
+  if (!name) { err.textContent = 'Please enter your first name.'; err.classList.add('show'); return; }
+  if (!email) { err.textContent = 'Please enter your email address.'; err.classList.add('show'); return; }
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!re.test(email)) { err.textContent = 'That does not look like a valid email address.'; err.classList.add('show'); return; }
+  err.classList.remove('show');
+
+  // Compute winning profile
+  const winner = Object.entries(scores).sort((a,b) => b[1]-a[1])[0][0];
+  const profile = PROFILES[winner];
+
+  // Show results
+  document.getElementById('gate').classList.remove('active');
+  const res = document.getElementById('results');
+  res.classList.add('active');
+
+  const nameParts = profile.name;
+  document.getElementById('profile-name').innerHTML = nameParts[0] + '<br><span class="thin">' + nameParts[1] + '</span>';
+  document.getElementById('profile-desc').textContent = profile.desc;
+  document.getElementById('pt-palette').textContent = profile.palette;
+  document.getElementById('pt-materials').textContent = profile.materials;
+  document.getElementById('pt-signature').textContent = profile.signature;
+
+  updateProg(13);
+  window.scrollTo(0, 0);
+
+  // Store for Luis (console log until CRM is wired)
+  console.log('LEAD:', { name, email, profile: winner, scores: JSON.stringify(scores), answers: JSON.stringify(answers) });
+}
+
+function selW(btn, gid) {
+  document.querySelectorAll('#' + gid + ' .wopt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function selV(el, gid) {
+  document.querySelectorAll('#' + gid + ' .vopt').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function selS(el, gid) {
+  document.querySelectorAll('#' + gid + ' .sopt').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function openParentModal() {
+  // If navigating back to homepage, open modal
+  localStorage.setItem('hb_open_modal', '1');
+}
+</script>
+</body>
+</html>
