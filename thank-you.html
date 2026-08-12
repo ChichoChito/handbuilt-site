@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You | Handbuilt</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1A2E20;
+    --green2: #304E3B;
+    --near-black: #111111;
+    --off-white: #F7F5F1;
+    --white: #FFFFFF;
+    --grey: #6B6B6B;
+    --border: #E3E0D9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--near-black);
+    background: var(--off-white);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header: logo only, no nav */
+  header {
+    padding: 40px 0 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo svg { width: 26px; height: auto; }
+  .logo-mark path, .logo-mark rect { fill: var(--green); }
+
+  .logo-word {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--near-black);
+  }
+
+  /* Hero: warm, confident, tied to the brand mark */
+  .hero {
+    position: relative;
+    padding: 88px 0 64px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: -60px;
+    right: -80px;
+    width: 480px;
+    height: 360px;
+    background: var(--green);
+    opacity: 0.06;
+    clip-path: polygon(0 30%, 60% 0, 100% 20%, 100% 100%, 20% 100%, 0 60%);
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.7s ease-out both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-content { animation: none; }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green2);
+    margin-bottom: 18px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green2);
+    flex-shrink: 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 7vw, 56px);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--near-black);
+  }
+
+  .hero h1 strong {
+    font-weight: 900;
+    display: block;
+    position: relative;
+  }
+
+  .accent {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 5px;
+    background: var(--green2);
+    border-radius: 3px;
+    transform-origin: left;
+    animation: growLine 0.6s ease-out 0.5s both;
+  }
+
+  @keyframes growLine {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .accent { animation: none; }
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--grey);
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* Steps */
+  .steps {
+    padding: 56px 0;
+    background: var(--white);
+  }
+
+  .steps-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green2);
+    margin-bottom: 28px;
+  }
+
+  .step {
+    display: flex;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--green);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .step p {
+    font-size: 16px;
+    padding-top: 6px;
+  }
+
+  /* Trust reinforcement */
+  .trust {
+    padding: 56px 0;
+    background: var(--green);
+    color: var(--white);
+  }
+
+  .trust-item {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .trust-item:last-child { border-bottom: none; }
+
+  .trust-item .label {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: var(--white);
+  }
+
+  .trust-item .detail {
+    font-size: 15px;
+    color: #C9D6CC;
+  }
+
+  /* Soft close */
+  .soft-close {
+    padding: 56px 0 80px;
+    background: var(--white);
+    text-align: center;
+  }
+
+  .soft-close p {
+    font-size: 15px;
+    color: var(--grey);
+    margin-bottom: 14px;
+  }
+
+  .soft-close a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--green2);
+    border-bottom: 1px solid var(--green2);
+    padding-bottom: 2px;
+    transition: opacity 0.15s ease;
+  }
+
+  .soft-close a:hover { opacity: 0.7; }
+
+  /* Footer */
+  footer {
+    background: var(--green);
+    color: var(--white);
+    padding: 40px 0;
+  }
+
+  footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer .logo-word { color: var(--white); }
+  footer .logo-mark path, footer .logo-mark rect { fill: var(--white); }
+
+  footer .meta {
+    font-size: 13px;
+    color: #C9D6CC;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 64px 0 48px; }
+    .hero-overlay { width: 320px; height: 260px; right: -100px; }
+    footer .wrap { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="/">
+      <svg class="logo-mark" viewBox="300 115 320 240" xmlns="http://www.w3.org/2000/svg">
+        <path d="M564.85,334.39v-188.66l43.08-8.94v-18.18l-254.3,50.73v19.24l29.94-6.12v151.94h-29.94v11.86h311.23v-11.86h-100.01ZM438.36,274.5h62.13v-42.46h-62.13v-60.08l116.62-24.19-43.89,24.98v141.11l46.14,20.52h-118.87v-59.88Z"/>
+      </svg>
+      <span class="logo-word">HANDBUILT</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="wrap hero-content">
+      <div class="eyebrow">Request Received</div>
+      <h1>You're in<br><strong>good hands<span class="accent"></span>.</strong></h1>
+      <p>We received your information. Someone from our team will reach out within 24 hours.</p>
+    </div>
+  </section>
+
+  <section class="steps">
+    <div class="wrap">
+      <div class="steps-label">What happens next</div>
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <p>We review what you shared. No automatic quotes, no guesswork.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <p>We call to schedule a Discovery Call, a 20 minute conversation about your project.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <p>If it's a fit, we set up a free in-home visit. No pitch. No pressure.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="wrap">
+      <div class="trust-item">
+        <div class="label">Design first.</div>
+        <div class="detail">Every decision made on paper before construction begins.</div>
+      </div>
+      <div class="trust-item">
+        <div class="label">Full visibility.</div>
+        <div class="detail">No hidden markups, no mystery line items.</div>
+      </div>
+      <div class="trust-item">
+        <div class="label">One team, start to finish.</div>
+        <div class="detail">No hand-offs between what was promised and what gets built.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="soft-close">
+    <div class="wrap">
+      <p>While you wait, you can see how we work.</p>
+      <a href="/process">See Our Process <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="/">
+      <svg class="logo-mark" viewBox="300 115 320 240" xmlns="http://www.w3.org/2000/svg" style="width:22px;">
+        <path d="M564.85,334.39v-188.66l43.08-8.94v-18.18l-254.3,50.73v19.24l29.94-6.12v151.94h-29.94v11.86h311.23v-11.86h-100.01ZM438.36,274.5h62.13v-42.46h-62.13v-60.08l116.62-24.19-43.89,24.98v141.11l46.14,20.52h-118.87v-59.88Z"/>
+      </svg>
+      <span class="logo-word">HANDBUILT</span>
+    </a>
+    <div class="meta">Los Angeles, California</div>
+  </div>
+</footer>
+
+</body>
+</html>
